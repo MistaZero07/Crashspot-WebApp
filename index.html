@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crashspot – Monroe</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1 class="title">Crashspot – Monroe</h1>
+    <span class="subtitle">Insights • Hotspots • Drive Mode</span>
+  </header>
+
+  <main class="app">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Layers</h2>
+        <label class="layer"><input type="checkbox" id="crashPointsLayer" checked /> Crash points</label>
+        <label class="layer"><input type="checkbox" id="heatmapLayer" /> Density bubbles</label>
+        <label class="layer"><input type="checkbox" id="clustersLayer" /> Clusters</label>
+        <label class="layer"><input type="checkbox" id="roadSegmentsLayer" /> Risk road segments</label>
+        <label class="layer"><input type="checkbox" id="riskSpotLayer" checked /> Predicted hotspots</label>
+      </section>
+
+      <section class="panel">
+        <h2>Filters</h2>
+        <div class="grid-2">
+          <div class="form-row">
+            <label for="yearFilter">Year</label>
+            <select id="yearFilter">
+              <option value="">All</option>
+              <option>2021</option><option>2022</option><option>2023</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="monthFilter">Month</label>
+            <select id="monthFilter">
+              <option value="">All</option>
+              <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+              <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+              <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+              <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Hour range</label>
+          <div class="range">
+            <input id="hourRangeMin" type="range" min="0" max="23" value="0" />
+            <input id="hourRangeMax" type="range" min="0" max="23" value="23" />
+            <div class="range-label"><span id="hourRangeLabel">0–23</span></div>
+          </div>
+        </div>
+
+        <div class="form-row toggles">
+          <label><input type="checkbox" id="weekendFilter" /> Weekend only</label>
+          <label><input type="checkbox" id="nighttimeFilter" /> Nighttime (6 PM–6 AM)</label>
+          <label><input type="checkbox" id="fatalOnly" /> Fatal only</label>
+        </div>
+
+        <button id="clearFilters" class="btn full">Clear filters</button>
+      </section>
+
+      <section class="panel">
+        <h2>Insights</h2>
+        <div id="insightNotice" class="notice" style="display:none"></div>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-num" id="kpiTotal">0</div><div class="kpi-label">Total crashes</div></div>
+          <div class="kpi"><div class="kpi-num" id="kpiFatal">0</div><div class="kpi-label">Fatal</div></div>
+          <div class="kpi"><div class="kpi-num" id="kpiInj">0</div><div class="kpi-label">Total injuries</div></div>
+          <div class="kpi"><div class="kpi-num" id="kpiPeak">N/A</div><div class="kpi-label">Peak hour</div></div>
+        </div>
+        <h3>Top 5 crash points (with address)</h3>
+        <div id="crashList" class="crash-list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Drive Mode</h2>
+        <label class="layer">
+          <input type="checkbox" id="driveMode" />
+          Enable drive mode (follow me & alert near predicted risk)
+        </label>
+        <div id="driveStatus" class="drive-status"></div>
+      </section>
+    </aside>
+
+    <section class="map-wrap">
+      <div id="map"></div>
+      <div id="toastContainer" class="toasts"></div>
+    </section>
+  </main>
+
+  <script defer src="app.js"></script>
+</body>
+</html>
