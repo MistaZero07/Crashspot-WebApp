@@ -1,39 +1,47 @@
-# 🚦 Crashspot Web App
+# Crashspot WebApp (Modernized)
 
-**Crashspot** is an interactive geospatial web application that visualizes and analyzes traffic crash data for Monroe, Louisiana (2021–2023).  
-The app allows users to explore crash hotspots, filter by various parameters, view predictive insights, and identify top crash-prone areas.
+Crashspot is a frontend geospatial safety dashboard for Monroe, Louisiana that helps users explore crash patterns, hotspot risk, and live location-based warnings using local crash datasets.
 
----
+## Final stack
+- React + TypeScript
+- Vite
+- React Leaflet (Leaflet map rendering)
+- Tailwind CSS
+- Local GeoJSON datasets (no backend required)
 
-## 🌐 Live Demo
-🔗 [View the hosted app on GitHub Pages](https://MistaZero07.github.io/Crashspot-WebApp)
+## Main features
+- **Map-first dashboard UI** with a modern dark visual style
+- **Multi-layer geospatial visualization**:
+  - Crash points
+  - Density circles
+  - Cluster layer
+  - Road segment risk layer
+  - Predicted hotspot layer
+- **Filters** by year, month, hour range, weekend/nighttime, and fatal-only
+- **Insights panel** with KPI cards, hourly trend mini-chart, and top crash locations
+- **Drive Mode** with live geolocation state + warning when entering predicted risk zones
+- **Responsive layout** for desktop-first with mobile-aware behavior
 
----
+## Data sources
+All data remains local and project-compatible:
+- `public/data/fars_monroe_2021_2022_2023_clean.geojson`
+- `public/data/fars_monroe_clusters.geojson`
+- `public/data/road_segments_risk.geojson`
+- `public/data/predicted_crash_risk.geojson`
 
-## 🗺️ Features
-- Interactive **map visualization** with crash data points and predictive hotspots  
-- **Dynamic filters** (Year, Month, Weather, Road Conditions, etc.)  
-- **Drive Mode** — alerts when near crash-prone locations  
-- **Insight panel** — summarizes crashes and shows top 5 locations with full addresses  
-- Responsive UI supporting both mobile and desktop  
+## Run locally
+```bash
+npm install
+npm run dev
+```
 
----
+Build for production:
+```bash
+npm run build
+npm run preview
+```
 
-## 🧠 Tech Stack
-- **Frontend:** HTML, CSS, JavaScript (Leaflet.js)  
-- **Data:** GeoJSON generated from cleaned crash datasets (FARS 2021–2023)  
-- **Libraries:** Leaflet, Turf.js, Chart.js  
-- **Hosting:** GitHub Pages  
-
----
-## 🧩 Future Improvements
-- Add backend for real-time crash updates  
-- Integrate live weather and road condition data  
-- Implement login and reporting module  
-
----
-
-## 👨‍💻 Author
-**Himal Ranabhat**  
-B.S. Computer Science @ University of Louisiana at Monroe  
-📍 Monroe, LA | 🌐 [GitHub Profile](https://github.com/MistaZero07)
+## Honest limitations / tradeoffs
+- The app remains frontend-only by design; no server-side enrichment or real-time feeds are included.
+- Drive Mode depends on browser geolocation availability/permission and can vary by device.
+- Reverse geocoding is intentionally not used to avoid backend/API dependency in this version.
