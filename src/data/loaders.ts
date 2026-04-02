@@ -1,6 +1,10 @@
 import type { GeoJSONFeatureCollection } from '../types/geojson';
 
-const dataUrl = (path: string) => new URL(path, import.meta.env.BASE_URL).toString();
+const dataUrl = (path: string) => {
+  const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${base}${normalizedPath}`;
+};
 
 const fetchGeoJson = async (path: string): Promise<GeoJSONFeatureCollection> => {
   const response = await fetch(path);
