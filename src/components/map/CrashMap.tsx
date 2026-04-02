@@ -2,7 +2,7 @@ import { Circle, CircleMarker, GeoJSON, MapContainer, Popup, TileLayer, useMap }
 import { useEffect } from 'react';
 import L from 'leaflet';
 import type { CrashRecord, HotspotPoint, LayerState } from '../../types/models';
-import type { GeoJSONFeature } from '../../types/geojson';
+import type { GeoJSONFeature, GeoJSONFeatureCollection } from '../../types/geojson';
 import { getSeverityColor } from '../../utils/insights';
 
 type Position = { lat: number; lng: number };
@@ -27,6 +27,9 @@ const FlyToSelection = ({ selectedFocus }: { selectedFocus: Position | null }) =
 
 export const CrashMap = ({ crashes, clusters, roads, hotspots, layers, selectedFocus, userLocation }: CrashMapProps) => {
   const densityPoints = new Map<string, { lat: number; lng: number; count: number }>();
+  const clusterCollection: GeoJSONFeatureCollection = { type: 'FeatureCollection', features: clusters };
+  const roadCollection: GeoJSONFeatureCollection = { type: 'FeatureCollection', features: roads };
+
   crashes.forEach((row) => {
     const key = `${row.lat.toFixed(2)}-${row.lng.toFixed(2)}`;
     const existing = densityPoints.get(key);
@@ -72,14 +75,14 @@ export const CrashMap = ({ crashes, clusters, roads, hotspots, layers, selectedF
 
       {layers.clusters && (
         <GeoJSON
-          data={{ type: 'FeatureCollection', features: clusters }}
+          data={clusterCollection}
           pointToLayer={(_, latlng) => new L.Circle(latlng, { radius: 150, color: '#22d3ee', fillOpacity: 0.15, weight: 2 })}
         />
       )}
 
       {layers.riskRoads && (
         <GeoJSON
-          data={{ type: 'FeatureCollection', features: roads }}
+          data={roadCollection}
           style={(feature) => {
             const riskValue = Number(feature?.properties?.risk ?? feature?.properties?.risk_score ?? 0);
             return {

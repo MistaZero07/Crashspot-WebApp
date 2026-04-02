@@ -41,6 +41,16 @@ npm run build
 npm run preview
 ```
 
+## Deploy to GitHub Pages
+The repo now includes a GitHub Actions workflow at `.github/workflows/deploy-pages.yml` that builds and publishes the Vite app to GitHub Pages whenever `main` is updated.
+
+Enable Pages in the repository settings:
+1. Open GitHub and go to `Settings` -> `Pages`.
+2. Under `Build and deployment`, set `Source` to `GitHub Actions`.
+3. Push the repo to GitHub and let the `Deploy To GitHub Pages` workflow run.
+
+The Vite base path is configured automatically from the GitHub repository name in CI, so the app and its GeoJSON files load correctly from the Pages URL.
+
 ## Honest limitations / tradeoffs
 - The app remains frontend-only by design; no server-side enrichment or real-time feeds are included.
 - Drive Mode depends on browser geolocation availability/permission and can vary by device.

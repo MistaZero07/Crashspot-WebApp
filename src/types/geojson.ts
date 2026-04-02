@@ -1,13 +1,5 @@
-export interface GeoJSONFeature {
-  type: 'Feature';
-  geometry: {
-    type: string;
-    coordinates: any;
-  };
-  properties: Record<string, unknown>;
-}
+import type { Feature, FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 
-export interface GeoJSONFeatureCollection {
-  type: 'FeatureCollection';
-  features: GeoJSONFeature[];
-}
+export type GeoJSONFeature = Feature<Geometry, GeoJsonProperties>;
+
+export type GeoJSONFeatureCollection = FeatureCollection<Geometry, GeoJsonProperties>;
